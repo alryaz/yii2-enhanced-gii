@@ -1019,7 +1019,7 @@ class Generator extends \yii\gii\Generator
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' => true],
                 ],
-                'filterInputOptions' => ['placeholder' => '$humanize', 'id' => '$id']
+                'filterInputOptions' => ['placeholder' => {$this->generateString('Choose')}, 'id' => '$id']
         ],\n";
             return $output;
         } else {
@@ -1116,7 +1116,7 @@ class Generator extends \yii\gii\Generator
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map($fkClassFQ::find()->orderBy('$labelCol')->asArray()->all(), '$rel[4]', '$labelCol'),
-                'options' => ['placeholder' => " . $this->generateString('Choose ' . $humanize) . "],
+                'options' => ['placeholder' => " . $this->generateString('Choose')."],
             ],
             'columnOptions' => ['width' => '200px']
         ]";
@@ -1136,7 +1136,7 @@ class Generator extends \yii\gii\Generator
                     'options' => [
                         'items' => " . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)) . ",
                         'columnOptions => ['width' => '185px'],
-                        'options' => ['placeholder' => " . $this->generateString('Choose ' . $humanize) . "],
+                        'options' => ['placeholder' => " . $this->generateString('Choose') . "],
                     ]
         ]";
             } elseif ($column->phpType !== 'string' || $column->size === null) {
@@ -1208,7 +1208,7 @@ class Generator extends \yii\gii\Generator
             $fkClassFQ = "\\" . $this->nsModel . "\\" . $rel[1];
             $output = "\$form->field(\$model, '$attribute')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map($fkClassFQ::find()->orderBy('$rel[4]')->asArray()->all(), '$rel[4]', '$labelCol'),
-        'options' => ['placeholder' => " . $this->generateString('Choose ' . $humanize) . "],
+        'options' => ['placeholder' => " . $this->generateString('Choose') . "],
         'pluginOptions' => [
             'allowClear' => $nullable
         ],
@@ -1228,9 +1228,9 @@ class Generator extends \yii\gii\Generator
                 return "\$form->field(\$model, '$attribute')->dropDownList("
                 . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)) . ", ['prompt' => ''])";
             } elseif ($column->phpType !== 'string' || $column->size === null) {
-                return "\$form->field(\$model, '$attribute')->$input(['placeholder' => '$placeholder'])";
+                return "\$form->field(\$model, '$attribute')->$input(['placeholder' => ''])";
             } else {
-                return "\$form->field(\$model, '$attribute')->$input(['maxlength' => true, 'placeholder' => '$placeholder'])";
+                return "\$form->field(\$model, '$attribute')->$input(['maxlength' => true, 'placeholder' => ''])";
             }
         }
     }
@@ -1295,7 +1295,7 @@ class Generator extends \yii\gii\Generator
             $fkClassFQ = "\\" . $this->nsModel . "\\" . $rel[1];
             $output = "\$form->field(\$model, '$attribute')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map($fkClassFQ::find()->orderBy('$rel[4]')->asArray()->all(), '$rel[4]', '$labelCol'),
-        'options' => ['placeholder' => " . $this->generateString('Choose ' . $humanize) . "],
+        'options' => ['placeholder' => " . $this->generateString('Choose') . "],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -1315,9 +1315,9 @@ class Generator extends \yii\gii\Generator
                 return "\$form->field(\$model, '$attribute')->dropDownList("
                 . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)) . ", ['prompt' => ''])";
             } elseif ($column->phpType !== 'string' || $column->size === null) {
-                return "\$form->field(\$model, '$attribute')->$input(['placeholder' => '$placeholder'])";
+                return "\$form->field(\$model, '$attribute')->$input(['placeholder' => ''])";
             } else {
-                return "\$form->field(\$model, '$attribute')->$input(['maxlength' => true, 'placeholder' => '$placeholder'])";
+                return "\$form->field(\$model, '$attribute')->$input(['maxlength' => true, 'placeholder' => ''])";
             }
         }
     }
