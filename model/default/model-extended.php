@@ -28,11 +28,11 @@ class <?= $className ?> extends Base<?= $className . "\n" ?>
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
-        return array_replace_recursive(parent::rules(),
-	    [<?= "\n            " . implode(",\n            ", $rules) . "\n        " ?>]);
-    }
+//    public function rules()
+//    {
+//        return array_merge(parent::rules(), [
+//            ]);
+//    }
 	
 <?php if ($generator->generateAttributeHints): ?>
     /**
