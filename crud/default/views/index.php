@@ -14,8 +14,7 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
-use kartik\export\ExportMenu;
-use <?= $generator->indexWidgetType === 'grid' ? "kartik\\grid\\GridView;" : "yii\\widgets\\ListView;" ?>
+use <?= $generator->indexWidgetType === 'grid' ? "mootensai\\enhancedgii\\grid\\GridView;" : "yii\\widgets\\ListView;" ?>
 
 /* @var $this yii\web\View */
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
@@ -34,11 +33,6 @@ $search = "$('.search-button').click(function(){
     <?='<?php ' ?>\mootensai\enhancedgii\components\FlashHelper::showFlashMessages(); <?='?>' ?>
 <?php endif; ?>
 
-    
-<?php if (!empty($generator->searchModelClass)): ?>
-<?= "    <?php " . ($generator->indexWidgetType === 'grid' ? "// " : "") ?>echo $this->render('_search', ['model' => $searchModel]); ?>
-<?php endif; ?>
-
     <p>
 <?php if (!empty($generator->searchModelClass)): ?>
         <!--Remove hide class to display-->
@@ -47,7 +41,7 @@ $search = "$('.search-button').click(function(){
     </p>
     <?php if (!empty($generator->searchModelClass)): ?>
     <div class="search-form" style="display:none">
-        <?= "<?php //echo " ?> $this->render('_search', ['model' => $searchModel]); ?>
+        <?= "    <?php " . ($generator->indexWidgetType === 'grid' ? "// " : "") ?>echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
     <?php endif; ?>
 <?php 
@@ -103,48 +97,7 @@ if ($generator->indexWidgetType === 'grid'):
     <?= "<?= " ?>GridView::widget([
         'dataProvider' => $dataProvider,
         <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => \$gridColumn,\n" : "'columns' => \$gridColumn,\n"; ?>
-        'pjax' => true,
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-<?= Inflector::camel2id(StringHelper::basename($generator->modelClass))?>']],
-        'hover' => true,
-        'responsiveWrap' => false,
-        'headerRowOptions'=>['class'=>'kartik-sheet-style'],
-        'filterRowOptions'=>['class'=>'kartik-sheet-style'],
-        // set a label for default menu
-        /*'export' => [
-            'label' => <?= $generator->generateString('Page')?>,
-            'fontAwesome' => false,
-        ],*/
-        'panel' => [
-            'type' => GridView::TYPE_PRIMARY,
-            'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
-            'before'  => Html::a('<i class="glyphicon glyphicon-plus"></i> '.<?= $generator->generateString('Create') ?>, ['create'], ['class' => 'btn btn-success', 'data-pjax'=>0]),
-            'after'   => Html::a('<i class="glyphicon glyphicon-repeat"></i> '.<?= $generator->generateString('Reset Filters')?>, ['index'], ['class' => 'btn btn-info']),
-        ],
-        'toolbar' => [
-            [
-                'content'=>
-                Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], [
-                'class' => 'btn btn-default',
-                'title' => <?= $generator->generateString('Reset Filters')?>
-                ]),
-            ],
-            '{export}',
-            // your toolbar can include the additional full export menu
-            /*ExportMenu::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => $gridColumn,
-                'target' => ExportMenu::TARGET_BLANK,
-                'fontAwesome' => false,
-                'dropdownOptions' => [
-                    'label' => <?= $generator->generateString('Full')?>,
-                    'class' => 'btn btn-default',
-                    'itemsBefore' => [
-                        '<li class="dropdown-header">'.<?= $generator->generateString('Export All Data')?>.'</li>',
-                    ],
-                ],
-            ]) ,*/
-            '{toggleData}',
-        ],
     ]); ?>
 <?php 
 else: 
