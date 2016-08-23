@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h2><?= '<?= Html::encode($this->title)' ?> ?></h2>
     <br/>
 <?php if ($generator->generateFlashMessages) : ?>
-    <?='<?php ' ?>\mootensai\enhancedgii\components\FlashHelper::showFlashMessages(); <?='?>' ?>
+    <?='<?php ' ?>\almirb\yii2common\components\FlashHelper::showFlashMessages(); <?='?>' ?>
 <?php endif; ?>
 
     <div class="clearfix crud-navigation">
