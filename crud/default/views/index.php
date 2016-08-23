@@ -14,7 +14,7 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
-use <?= $generator->indexWidgetType === 'grid' ? "mootensai\\enhancedgii\\grid\\GridView;" : "yii\\widgets\\ListView;" ?>
+use <?= $generator->indexWidgetType === 'grid' ? "almirb\\yii2common\\components\\grid\\GridView;" : "yii\\widgets\\ListView;" ?>
 
 /* @var $this yii\web\View */
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
@@ -30,7 +30,7 @@ $search = "$('.search-button').click(function(){
 ?>
 <div class="<?= Inflector::camel2id($baseModelClass) ?>-index">
 <?php if ($generator->generateFlashMessages) : ?>
-    <?='<?php ' ?>\mootensai\enhancedgii\components\FlashHelper::showFlashMessages(); <?='?>' ?>
+    <?='<?php ' ?>\almirb\yii2common\components\FlashHelper::showFlashMessages(); <?='?>' ?>
 <?php endif; ?>
 
     <p>
@@ -87,7 +87,7 @@ if ($generator->indexWidgetType === 'grid'):
             endif;
         endforeach; ?>
         [
-            'class' => 'almirb\btactioncolumn\ActionColumn',
+            'class' => 'almirb\yii2common\components\grid\ActionColumn',
         ],
     ]; 
 <?php 
