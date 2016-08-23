@@ -13,6 +13,10 @@
             "name": "Jiwantoro Ndaru",
             "email": "jiwanndaru@gmail.com"
         }
+        {
+            "name": "Almir Bolduan",
+            "email": "almir.bsi@gmail.com"
+        }
     ],
     "require": {
         "yiisoft/yii2": "*",
