@@ -66,6 +66,7 @@ use <?= ltrim($generator->nsModel . '\\' . $modelClass, '\\') . (isset($modelAli
         $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find();
 
         $dataProvider = new ActiveDataProvider([
+            'totalCount' => <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find()->count(),
             'query' => $query,
         ]);
 
