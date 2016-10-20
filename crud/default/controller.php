@@ -172,7 +172,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 
         try {
             $model->delete<?= $generator->generateRelationsOnCreate ? 'WithRelated' : '' ?>();
-        } catch (yii\db\Exception $e) {
+        } catch (\yii\db\Exception $e) {
             if($e->errorInfo[1] == 1451) {
 <?php if ($generator->generateFlashMessages) : ?>
             Yii::$app->session->setFlash('danger', <?= $generator->generateString('Couldn\'t erase this item because It has related items!')?>);
