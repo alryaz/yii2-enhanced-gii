@@ -1187,26 +1187,35 @@ class Generator extends \yii\gii\Generator
         } elseif ($column->dbType === 'date') {
             return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::classname(), [        
         'widgetClass' => 'yii\widgets\MaskedInput',
-        'options' => [
-            'mask' => 'd/m/y',
-            'options' => ['class'=>'form-control'],
-        ]
+        'widgetOptions' => [
+                    'options' => ['class'=>'form-control'],
+                    'clientOptions' => [
+                        'alias' => 'date',
+                        'placeholder' => '_',
+                    ],
+                ]
     ]);";
         } elseif ($column->dbType === 'time') {
             return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::classname(), [      
         'widgetClass' => 'yii\widgets\MaskedInput',
-        'options' => [
-            'mask' => 'h:i:s',
-            'options' => ['class'=>'form-control'],
-        ]
+        'widgetOptions' => [
+                    'options' => ['class'=>'form-control'],
+                    'clientOptions' => [
+                        'alias'    => 'hh:mm:ss',    
+                        //'placeholder' => '_',
+                    ],
+                ]
     ])";
         } elseif ($column->dbType === 'datetime') {
             return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::classname(), [        
         'widgetClass' => 'yii\widgets\MaskedInput',
-        'options' => [
-            'mask' => 'd/m/y h:i:s',
-            'options' => ['class'=>'form-control'],
-        ]
+        'widgetOptions' => [
+                    'options' => ['class'=>'form-control'],
+                    'clientOptions' => [
+                        'alias'    => 'datetime',                    
+                        //'placeholder' => '_',
+                    ],
+                ]
     ])";
         } elseif (array_key_exists($column->name, $fk)) {
             $rel = $fk[$column->name];
