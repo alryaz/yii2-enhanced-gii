@@ -392,7 +392,7 @@ class Generator extends \yii\gii\Generator
             $viewPath = $this->getViewPath();
             $templatePath = $this->getTemplatePath() . '/views';
             foreach (scandir($templatePath) as $file) {
-                if (empty($this->searchModelClass) && $file === '_search.php') {
+                if ($file === '_search.php') {
                     continue;
                 }
                 if ($file === '_formref.php' || $file === '_dataref.php' || $file === '_expand.php' || $file === '_data.php' || $file === '_detail.php') {

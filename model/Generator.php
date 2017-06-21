@@ -344,7 +344,7 @@ class Generator extends \yii\gii\Generator {
             ];
             // model :
             $files[] = new CodeFile(
-                    Yii::getAlias('@' . str_replace('\\', '/', $this->nsModel)) . '/base/' . $modelClassName . '.php', $this->render('model.php', $params)
+                    Yii::getAlias('@' . str_replace('\\', '/', $this->nsModel)) . '/base/Base' . $modelClassName . '.php', $this->render('model.php', $params)
             );
             if (!$this->generateBaseOnly) {
                 $files[] = new CodeFile(

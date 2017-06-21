@@ -73,10 +73,10 @@ use mootensai\behaviors\UUIDBehavior;
 <?php endforeach; ?>
 <?php endif; ?>
  */
-class <?= $className ?> extends <?= '\\' . ltrim($generator->baseModelClass, '\\') . "\n" ?>
+abstract class Base<?= $className ?> extends <?= '\\' . ltrim($generator->baseModelClass, '\\') . "\n" ?>
 {
 
-    use \mootensai\relation\RelationTrait;
+    //use \mootensai\relation\RelationTrait;
 
     /**
      * @inheritdoc
