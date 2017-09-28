@@ -184,7 +184,11 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         Yii::$app->session->setFlash('success', <?= $generator->generateString('Item successfully erased!') ?>);
 <?php endif; ?>
 
-        return $this->redirect(['index']);
+        if (Yii::$app->request->isAjax) {
+            return Yii::$app->getResponse()->redirect(Yii::$app->request->referrer, 200, false);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 <?php if ($generator->pdf):?>    
     /**
