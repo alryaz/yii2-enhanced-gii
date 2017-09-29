@@ -180,13 +180,13 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }
-<?php if ($generator->generateFlashMessages) : ?>
-        Yii::$app->session->setFlash('success', <?= $generator->generateString('Item successfully erased!') ?>);
-<?php endif; ?>
 
         if (Yii::$app->request->isAjax) {
             return Yii::$app->getResponse()->redirect(Yii::$app->request->referrer, 200, false);
         } else {
+<?php if ($generator->generateFlashMessages) : ?>
+            Yii::$app->session->setFlash('success', <?= $generator->generateString('Item successfully erased!') ?>);
+<?php endif; ?>
             return $this->redirect(['index']);
         }
     }
