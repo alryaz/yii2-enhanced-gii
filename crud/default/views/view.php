@@ -23,12 +23,13 @@ $this->params['breadcrumbs'][] = ['label' => <?= ($generator->pluralize) ? $gene
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-view">
+<?php if (!$generator->adminLTE) : ?>
     <h2><?= '<?= Html::encode($this->title)' ?> ?></h2>
     <br/>
+<?php endif ?>
 <?php if ($generator->generateFlashMessages) : ?>
     <?='<?php ' ?>\almirb\yii2common\components\FlashHelper::showFlashMessages(); <?='?>' ?>
 <?php endif; ?>
-
     <div class="clearfix crud-navigation">
         <!-- menu buttons -->
         <div class='pull-left'>
