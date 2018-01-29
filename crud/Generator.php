@@ -1011,6 +1011,11 @@ class Generator extends \yii\gii\Generator
             $id = 'grid-' . Inflector::camel2id(StringHelper::basename($this->searchModelClass)) . '-' . $attribute;
             //$modelRel = $rel[2] ? lcfirst(Inflector::pluralize($rel[1])) : lcfirst($rel[1]);
             $modelRel = $rel[6];
+
+            $filterWidgetOptions = ["'pluginOptions' => ['allowClear' => true],"];
+            if ($this->adminLTE) {
+                $filterWidgetOptions[] = "'theme' => \kartik\select2\Select2::THEME_DEFAULT,";
+            }
             $output = "[
                 'attribute' => '$attribute',
                 'label' => " . $this->generateString(ucwords(Inflector::humanize($rel[5]))) . ",
@@ -1019,9 +1024,9 @@ class Generator extends \yii\gii\Generator
                 },
                 'filterType' => GridView::FILTER_SELECT2,
                 'filter' => \\yii\\helpers\\ArrayHelper::map(\\$this->nsModel\\$rel[1]::find()->asArray()->all(), '$rel[4]', '$labelCol'),
-                'filterWidgetOptions' => [
-                    'pluginOptions' => ['allowClear' => true],
-                ],
+                'filterWidgetOptions' => [\n                        ".
+                implode("\n                        ", $filterWidgetOptions)."\n                    ".
+                "],
                 'filterInputOptions' => ['placeholder' => {$this->generateString('Choose')}, 'id' => '$id']
         ],\n";
             return $output;
@@ -1311,14 +1316,18 @@ class Generator extends \yii\gii\Generator
         } elseif (array_key_exists($column->name, $fk)) {
             $rel = $fk[$column->name];
             $labelCol = $this->getNameAttributeFK($rel[3]);
+            $nullable = ($column->allowNull) ? 'true' : 'false';
             $humanize = Inflector::humanize($rel[3]);
 //            $pk = empty($this->tableSchema->primaryKey) ? $this->tableSchema->getColumnNames()[0] : $this->tableSchema->primaryKey[0];
             $fkClassFQ = "\\" . $this->nsModel . "\\" . $rel[1];
+
+            $theme = ($this->adminLTE) ? "\n        'theme' => \kartik\select2\Select2::THEME_DEFAULT," : '';
+
             $output = "\$form->field(\$model, '$attribute')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map($fkClassFQ::find()->orderBy('$rel[4]')->asArray()->all(), '$rel[4]', '$labelCol'),
-        'options' => ['placeholder' => " . $this->generateString('Choose') . "],
+        'options' => ['placeholder' => " . $this->generateString('Choose') . "],{$theme}
         'pluginOptions' => [
-            'allowClear' => true
+            'allowClear' => $nullable
         ],
     ])";
             return $output;
