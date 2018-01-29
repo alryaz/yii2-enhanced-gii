@@ -66,6 +66,9 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <br/>
+<?php if ($generator->adminLTE): ?>
+    <div class="box box-primary">
+<?php endif; ?>
     <?php if ($generator->generateRelationsOnView): ?>
     <div class="row">
     <?php endif ?>
@@ -94,6 +97,9 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
         'attributes' => $gridColumn
     ]); 
 ?>
+<?php if ($generator->adminLTE): ?>
+    </div>
+<?php endif; ?>
 
 <?php if ($generator->generateRelationsOnView) {  ?>
 <?php foreach ($relations as $name => $rel): ?>
