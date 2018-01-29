@@ -21,12 +21,14 @@ $this->params['breadcrumbs'][] = ['label' => <?= ($generator->pluralize) ? $gene
 $this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => ['view', <?= $urlParams ?>]];
 $this->params['breadcrumbs'][] = <?= $generator->generateString('Edit') ?>;
 ?>
-<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update">
+<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update<?= ($generator->adminLTE) ? ' box box-primary' : ''?>">
 
-    <h2><?= "<?= " ?>Html::encode($this->title) ?></h2>
-    <br/>
+    <?php if (!$generator->adminLTE) : ?>
+        <h2><?= "<?= " ?>Html::encode($this->title) ?></h2>
+        <br/>
+    <?php endif; ?>
     <?= "<?= " ?>$this->render('_form', [
-        'model' => $model,
+    'model' => $model,
     ]) ?>
 
 </div>

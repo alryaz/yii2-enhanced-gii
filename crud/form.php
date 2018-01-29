@@ -58,6 +58,11 @@ echo $form->field($generator, 'skippedRelations');
             <?= $form->field($generator, 'generateFlashMessages')->checkbox(); ?>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($generator, 'adminLTE')->checkbox(); ?>
+        </div>
+    </div>
 <?php
 echo $form->field($generator, 'nsSearchModel');
 echo $form->field($generator, 'searchModelClass');

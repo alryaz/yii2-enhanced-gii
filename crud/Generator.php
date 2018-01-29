@@ -82,6 +82,7 @@ class Generator extends \yii\gii\Generator
     public $indexWidgetType = 'grid';
     public $skippedRelations;
     public $relations;
+    public $adminLTE;
 
     /**
      * @inheritdoc
@@ -120,7 +121,7 @@ class Generator extends \yii\gii\Generator
 //            [['searchModelClass'], 'validateNewClass'],
             [['indexWidgetType'], 'in', 'range' => ['grid', 'list']],
 //            [['modelClass'], 'validateModelClass'],
-            [['enableI18N', 'generateRelations', 'generateRelationsOnCreate', 'generateRelationsOnView', 'generateFlashMessages','generateSearchModel', 'pluralize', 'expandable', 'cancelable', 'pdf', 'loggedUserOnly'], 'boolean'],
+            [['enableI18N', 'generateRelations', 'generateRelationsOnCreate', 'generateRelationsOnView', 'generateFlashMessages','generateSearchModel', 'pluralize', 'expandable', 'cancelable', 'pdf', 'loggedUserOnly', 'adminLTE'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
             [['viewPath', 'skippedRelations', 'skippedColumns',
                 'controllerClass', 'blameableValue', 'nameAttribute',
@@ -154,7 +155,8 @@ class Generator extends \yii\gii\Generator
             'searchModelClass' => 'Search Model Class',
             'expandable' => 'Expandable Index Grid View',
             'cancelable' => 'Add Cancel Button On Form',
-            'pdf' => 'PDF Printable View'
+            'pdf' => 'PDF Printable View',
+            'adminLTE' => 'AdminLTE Style'
         ]);
     }
 
@@ -263,6 +265,7 @@ class Generator extends \yii\gii\Generator
                 the namespace part as it is specified in "ActiveQuery Namespace". You do not need to specify the class name
                 if "Table Name" ends with asterisk, in which case multiple ActiveQuery classes will be generated.',
             'queryBaseClass' => 'This is the base class of the new ActiveQuery class. It should be a fully qualified namespaced class name.',
+            'adminLTE' => 'Generate AdminLTE Styled views.'
         ]);
     }
 
@@ -1244,7 +1247,7 @@ class Generator extends \yii\gii\Generator
                     $dropDownOptions[$enumValue] = Inflector::humanize($enumValue);
                 }
                 return "\$form->field(\$model, '$attribute')->dropDownList("
-                . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)) . ", ['prompt' => ''])";
+                    . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)) . ", ['prompt' => ''])";
             } elseif ($column->phpType !== 'string' || $column->size === null) {
                 return "\$form->field(\$model, '$attribute')->$input(['placeholder' => ''])";
             } else {
@@ -1331,7 +1334,7 @@ class Generator extends \yii\gii\Generator
                     $dropDownOptions[$enumValue] = Inflector::humanize($enumValue);
                 }
                 return "\$form->field(\$model, '$attribute')->dropDownList("
-                . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)) . ", ['prompt' => ''])";
+                    . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)) . ", ['prompt' => ''])";
             } elseif ($column->phpType !== 'string' || $column->size === null) {
                 return "\$form->field(\$model, '$attribute')->$input(['placeholder' => ''])";
             } else {

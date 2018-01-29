@@ -82,6 +82,9 @@ if ($generator->indexWidgetType === 'grid'):
         'dataProvider' => $dataProvider,
         <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => \$gridColumn,\n" : "'columns' => \$gridColumn,\n"; ?>
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-<?= Inflector::camel2id(StringHelper::basename($generator->modelClass))?>']],
+<?php if ($generator->adminLTE) : ?>
+        'panelPrefix' => 'box box-',
+<?php endif ?>
     ]); ?>
 <?php 
 else: 
