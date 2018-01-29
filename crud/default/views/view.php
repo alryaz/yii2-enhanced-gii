@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php if ($generator->generateFlashMessages) : ?>
     <?='<?php ' ?>\almirb\yii2common\components\FlashHelper::showFlashMessages(); <?='?>' ?>
 <?php endif; ?>
+
     <div class="clearfix crud-navigation">
         <!-- menu buttons -->
         <div class='pull-left'>
