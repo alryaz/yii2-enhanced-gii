@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?='<?php ' ?>\almirb\yii2common\components\FlashHelper::showFlashMessages(); <?='?>' ?>
 <?php endif; ?>
 
-    <div class="clearfix crud-navigation">
+    <div class="clearfix crud-navigation no-print">
         <!-- menu buttons -->
         <div class='pull-left'>
             <?= "
