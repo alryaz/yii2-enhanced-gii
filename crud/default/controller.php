@@ -108,7 +108,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 <?php endif; ?>
 <?php endforeach; ?>
         return $this->render('view', [
-            'model' => $this->findModel(<?= $actionParams ?>),
+            'model' => $model,
 <?php foreach ($relations as $name => $rel): ?>
 <?php if ($rel[2] && isset($rel[3]) && !in_array($name, $generator->skippedRelations) && $generator->generateRelationsOnView): ?>
             'provider<?= $rel[1]?>' => $provider<?= $rel[1]?>,
