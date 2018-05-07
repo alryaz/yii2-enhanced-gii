@@ -26,7 +26,7 @@ use \<?= $generator->nsModel ?>\base\Base<?= $className ?>;
 class <?= $className ?> extends Base<?= $className . "\n" ?>
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
 //    public function rules()
 //    {
@@ -36,7 +36,7 @@ class <?= $className ?> extends Base<?= $className . "\n" ?>
 	
 <?php if ($generator->generateAttributeHints): ?>
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeHints()
     {

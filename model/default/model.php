@@ -9,6 +9,7 @@
 /* @var $className string class name */
 /* @var $queryClassName string query class name */
 /* @var $tableSchema yii\db\TableSchema */
+/* @var $properties array list of properties (property => [type, name. comment]) */
 /* @var $labels string[] list of attribute labels (name => label) */
 /* @var $rules string[] list of validation rules */
 /* @var $relations array list of relations (name => relation declaration) */
@@ -63,8 +64,8 @@ use mootensai\behaviors\UUIDBehavior;
 /**
  * This is the base model class for table "<?= $generator->generateTableName($tableName) ?>".
  *
-<?php foreach ($tableSchema->columns as $column): ?>
- * @property <?= "{$column->phpType} \${$column->name}\n" ?>
+<?php foreach ($properties as $property => $data): ?>
+ * @property <?= "{$data['type']} \${$property}"  . ($data['comment'] ? ' ' . strtr($data['comment'], ["\n" => ' ']) : '') . "\n" ?>
 <?php endforeach; ?>
 <?php if (!empty($relations)): ?>
  *
@@ -79,7 +80,7 @@ abstract class Base<?= $className ?> extends <?= '\\' . ltrim($generator->baseMo
     //use \mootensai\relation\RelationTrait;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -87,7 +88,7 @@ abstract class Base<?= $className ?> extends <?= '\\' . ltrim($generator->baseMo
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -118,7 +119,7 @@ abstract class Base<?= $className ?> extends <?= '\\' . ltrim($generator->baseMo
 <?php endif; ?>
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -144,7 +145,7 @@ abstract class Base<?= $className ?> extends <?= '\\' . ltrim($generator->baseMo
         || $generator->createdBy || $generator->updatedBy
         || $generator->UUIDColumn): 
     echo "\n"; ?>/**
-     * @inheritdoc
+     * {@inheritdoc}
      * @return type mixed
      */ 
     public function behaviors()
@@ -152,7 +153,7 @@ abstract class Base<?= $className ?> extends <?= '\\' . ltrim($generator->baseMo
         return [
 <?php if ($generator->createdAt || $generator->updatedAt):?>
             [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
 <?php if (!empty($generator->createdAt)):?>
                 'createdAtAttribute' => '<?= $generator->createdAt?>',
 <?php else :?>
@@ -170,7 +171,7 @@ abstract class Base<?= $className ?> extends <?= '\\' . ltrim($generator->baseMo
 <?php endif; ?>
 <?php if ($generator->createdBy || $generator->updatedBy):?>
             [
-                'class' => BlameableBehavior::className(),
+                'class' => BlameableBehavior::class,
 <?php if (!empty($generator->createdBy)):?>
                 'createdByAttribute' => '<?= $generator->createdBy?>',
 <?php else :?>
@@ -188,7 +189,7 @@ abstract class Base<?= $className ?> extends <?= '\\' . ltrim($generator->baseMo
 <?php endif; ?>
 <?php if ($generator->UUIDColumn):?>
             [
-                'class' => UUIDBehavior::className(),
+                'class' => UUIDBehavior::class,
 <?php if (!empty($generator->UUIDColumn)):?>
                 'column' => '<?= $generator->UUIDColumn?>',
 <?php endif; ?>
@@ -203,7 +204,7 @@ abstract class Base<?= $className ?> extends <?= '\\' . ltrim($generator->baseMo
     echo "\n";
 ?>
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      * @return <?= $queryClassFullName ?> the active query used by this AR class.
      */
     public static function find()

@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h2><?= '<?= Html::encode($this->title)' ?> ?></h2>
     <br/>
 <?php endif ?>
-<?php if ($generator->generateFlashMessages) : ?>
+<?php if ($generator->generateFlashMessages and !$generator->adminLTE) : ?>
     <?='<?php ' ?>\almirb\yii2common\components\FlashHelper::showFlashMessages(); <?='?>' ?>
 <?php endif; ?>
 

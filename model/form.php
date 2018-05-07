@@ -24,18 +24,22 @@ echo $form->field($generator, 'queryBaseClass');
     <div class="col-md-6">
 <?= $form->field($generator, 'useTablePrefix')->checkbox(); ?>
     </div>
-</div>    
+</div>
 <div class="row">
     <div class="col-md-6">
-<?= $form->field($generator, 'generateRelations')->checkbox(); ?>
+<?= $form->field($generator, 'generateBaseOnly')->checkbox(); ?>
     </div>
     <div class="col-md-6">
 <?= $form->field($generator, 'generateAttributeHints')->checkbox(); ?>
     </div>
-</div>    
+</div>
 <div class="row">
     <div class="col-md-12">
-<?= $form->field($generator, 'generateBaseOnly')->checkbox(); ?>
+<?= $form->field($generator, 'generateRelations')->dropDownList([
+    \mootensai\enhancedgii\model\Generator::RELATIONS_NONE => 'No relations',
+    \mootensai\enhancedgii\model\Generator::RELATIONS_ALL => 'All relations',
+    \mootensai\enhancedgii\model\Generator::RELATIONS_ALL_INVERSE => 'All relations with inverse',
+]); ?>
     </div>
 </div>
 <?= $form->field($generator, 'optimisticLock'); ?>

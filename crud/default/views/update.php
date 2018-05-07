@@ -23,10 +23,10 @@ $this->params['breadcrumbs'][] = <?= $generator->generateString('Edit') ?>;
 ?>
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update<?= ($generator->adminLTE) ? ' box box-primary' : ''?>">
 
-    <?php if (!$generator->adminLTE) : ?>
-        <h2><?= "<?= " ?>Html::encode($this->title) ?></h2>
-        <br/>
-    <?php endif; ?>
+<?php if (!$generator->adminLTE) : ?>
+    <h2><?= "<?= " ?>Html::encode($this->title) ?></h2>
+    <br/>
+<?php endif; ?>
     <?= "<?= " ?>$this->render('_form', [
     'model' => $model,
     ]) ?>

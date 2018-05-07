@@ -36,7 +36,7 @@ use <?= ltrim($generator->nsModel . '\\' . $modelClass, '\\') . (isset($modelAli
 
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -46,7 +46,7 @@ use <?= ltrim($generator->nsModel . '\\' . $modelClass, '\\') . (isset($modelAli
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
@@ -65,9 +65,11 @@ use <?= ltrim($generator->nsModel . '\\' . $modelClass, '\\') . (isset($modelAli
     {
         $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find();
 
+        // add conditions that should always apply here
+
         $dataProvider = new ActiveDataProvider([
-            //'totalCount' => <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find()->count(),
             'query' => $query,
+            //'sort'=> ['defaultOrder' => ['created_at'=> SORT_ASC]],
         ]);
 
         $this->load($params);
@@ -78,6 +80,7 @@ use <?= ltrim($generator->nsModel . '\\' . $modelClass, '\\') . (isset($modelAli
             return $dataProvider;
         }
 
+        // grid filtering conditions
         <?= implode("\n        ", $searchConditions) ?>
 
         return $dataProvider;

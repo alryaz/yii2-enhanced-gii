@@ -85,7 +85,7 @@ class Generator extends \yii\gii\Generator
     public $adminLTE;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -93,7 +93,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDescription()
     {
@@ -102,7 +102,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -113,8 +113,8 @@ class Generator extends \yii\gii\Generator
             [['tableName'], 'validateTableName'],
 //            [['searchModelClass'], 'compare', 'compareAttribute' => 'modelClass', 'operator' => '!==', 'message' => 'Search Model Class must not be equal to Model Class.'],
             [['modelClass', 'baseControllerClass', 'searchModelClass', 'db', 'queryClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
-//            [['modelClass'], 'validateClass', 'params' => ['extends' => BaseActiveRecord::className()]],
-            [['baseControllerClass'], 'validateClass', 'params' => ['extends' => Controller::className()]],
+//            [['modelClass'], 'validateClass', 'params' => ['extends' => BaseActiveRecord::class]],
+            [['baseControllerClass'], 'validateClass', 'params' => ['extends' => Controller::class]],
             [['db'], 'validateDb'],
             [['controllerClass'], 'match', 'pattern' => '/Controller$/', 'message' => 'Controller class name must be suffixed with "Controller".'],
             [['controllerClass'], 'match', 'pattern' => '/(^|\\\\)[A-Z][^\\\\]+Controller$/', 'message' => 'Controller class name must start with an uppercase letter.'],
@@ -131,7 +131,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -161,7 +161,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function hints()
     {
@@ -270,7 +270,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function stickyAttributes()
     {
@@ -302,7 +302,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function autoCompleteData()
     {
@@ -319,7 +319,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requiredTemplates()
     {
@@ -338,7 +338,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function generate()
     {
@@ -483,7 +483,7 @@ class Generator extends \yii\gii\Generator
         $viaLink = $this->generateRelationLink([$table->primaryKey[0] => $fks[$table->primaryKey[0]][1]]);
         $relationName = $this->generateRelationName($relations, $table0Schema, $table->primaryKey[1], true);
         $relations[$table0Schema->fullName][$relationName] = [
-            "return \$this->hasMany(\\{$this->nsModel}\\$className1::className(), $link)->viaTable('"
+            "return \$this->hasMany(\\{$this->nsModel}\\$className1::class, $link)->viaTable('"
             . $this->generateTableName($table->name) . "', $viaLink);",
             $className1,
             true,
@@ -493,7 +493,7 @@ class Generator extends \yii\gii\Generator
         $viaLink = $this->generateRelationLink([$table->primaryKey[1] => $fks[$table->primaryKey[1]][1]]);
         $relationName = $this->generateRelationName($relations, $table1Schema, $table->primaryKey[0], true);
         $relations[$table1Schema->fullName][$relationName] = [
-            "return \$this->hasMany(\\{$this->nsModel}\\$className0::className(), $link)->viaTable('"
+            "return \$this->hasMany(\\{$this->nsModel}\\$className0::class, $link)->viaTable('"
             . $this->generateTableName($table->name) . "', $viaLink);",
             $className0,
             true,
@@ -555,7 +555,7 @@ class Generator extends \yii\gii\Generator
                     $link = $this->generateRelationLink(array_flip($refs));
                     $relationName = $this->generateRelationName($relations, $table, $fks[0], false);
                     $relations[$table->fullName][lcfirst($relationName)] = [
-                        self::REL_TYPE => "return \$this->hasOne(\\{$this->nsModel}\\$refClassName::className(), $link);", // relation type
+                        self::REL_TYPE => "return \$this->hasOne(\\{$this->nsModel}\\$refClassName::class, $link);", // relation type
                         self::REL_CLASS => $refClassName, //relclass
                         self::REL_IS_MULTIPLE => 0, //is multiple
                         self::REL_TABLE => $refTable, //related table
@@ -580,7 +580,7 @@ class Generator extends \yii\gii\Generator
                     $link = $this->generateRelationLink($refs);
                     $relationName = $this->generateRelationName($relations, $refTableSchema, $className, $hasMany);
                     $relations[$refTableSchema->fullName][lcfirst($relationName)] = [
-                        self::REL_TYPE => "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "(\\{$this->nsModel}\\$className::className(), $link);", // rel type
+                        self::REL_TYPE => "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "(\\{$this->nsModel}\\$className::class, $link);", // rel type
                         self::REL_CLASS => $className, //rel class
                         self::REL_IS_MULTIPLE => $hasMany, //is multiple
                         self::REL_TABLE => $table->fullName, // rel table
@@ -1130,7 +1130,7 @@ class Generator extends \yii\gii\Generator
             $output = "'$attribute' => [
             'label' => '$humanize',
             'type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\Select2::className(),
+            'widgetClass' => \kartik\widgets\Select2::class,
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map($fkClassFQ::find()->orderBy('$labelCol')->asArray()->all(), '$rel[4]', '$labelCol'),
                 'options' => ['placeholder' => " . $this->generateString('Choose')."],
@@ -1193,7 +1193,7 @@ class Generator extends \yii\gii\Generator
         } elseif ($column->type === 'text' || $column->dbType === 'tinytext') {
             return "\$form->field(\$model, '$attribute')->textarea(['rows' => 6])";
         } elseif ($column->dbType === 'date') {
-            return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::classname(), [        
+            return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::class, [        
         'widgetClass' => 'yii\widgets\MaskedInput',
         'widgetOptions' => [
                     'options' => ['class'=>'form-control'],
@@ -1204,7 +1204,7 @@ class Generator extends \yii\gii\Generator
                 ]
     ]);";
         } elseif ($column->dbType === 'time') {
-            return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::classname(), [      
+            return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::class, [      
         'type'=> \kartik\datecontrol\DateControl::FORMAT_TIME,
         'widgetClass' => 'yii\widgets\MaskedInput',
         'widgetOptions' => [
@@ -1216,7 +1216,7 @@ class Generator extends \yii\gii\Generator
                 ]
     ])";
         } elseif ($column->dbType === 'datetime') {
-            return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::classname(), [        
+            return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::class, [        
         'type'=> \kartik\datecontrol\DateControl::FORMAT_DATETIME,
         'widgetClass' => 'yii\widgets\MaskedInput',
         'widgetOptions' => [
@@ -1237,7 +1237,7 @@ class Generator extends \yii\gii\Generator
 
             $theme = ($this->adminLTE) ? "\n        'theme' => \kartik\select2\Select2::THEME_DEFAULT," : '';
 
-            $output = "\$form->field(\$model, '$attribute')->widget(\kartik\widgets\Select2::classname(), [
+            $output = "\$form->field(\$model, '$attribute')->widget(\kartik\widgets\Select2::class, [
         'data' => \yii\helpers\ArrayHelper::map($fkClassFQ::find()->orderBy('$rel[4]')->asArray()->all(), '$rel[4]', '$labelCol'),
         'options' => ['placeholder' => " . $this->generateString('Choose') . "],{$theme}
         'pluginOptions' => [
@@ -1295,7 +1295,7 @@ class Generator extends \yii\gii\Generator
         } elseif ($column->type === 'text' || $column->dbType === 'tinytext') {
             return "\$form->field(\$model, '$attribute')->textarea(['rows' => 6])";
         } elseif ($column->dbType === 'date') {
-            return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::classname(), [
+            return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::class, [
         'widgetClass' => 'yii\widgets\MaskedInput',
         'options' => [
             'mask' => 'd/m/y',
@@ -1303,7 +1303,7 @@ class Generator extends \yii\gii\Generator
         ]
     ]);";
         } elseif ($column->dbType === 'time') {
-            return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::classname(), [
+            return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::class, [
         'widgetClass' => 'yii\widgets\MaskedInput',
         'options' => [
             'mask' => 'h:i:s',
@@ -1311,7 +1311,7 @@ class Generator extends \yii\gii\Generator
         ]
     ])";
         } elseif ($column->dbType === 'datetime') {
-            return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::classname(), [
+            return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::class, [
         'widgetClass' => 'yii\widgets\MaskedInput',
         'options' => [
             'mask' => 'd/m/y h:i:s',
@@ -1328,7 +1328,7 @@ class Generator extends \yii\gii\Generator
 
             $theme = ($this->adminLTE) ? "\n        'theme' => \kartik\select2\Select2::THEME_DEFAULT," : '';
 
-            $output = "\$form->field(\$model, '$attribute')->widget(\kartik\widgets\Select2::classname(), [
+            $output = "\$form->field(\$model, '$attribute')->widget(\kartik\widgets\Select2::class, [
         'data' => \yii\helpers\ArrayHelper::map($fkClassFQ::find()->orderBy('$rel[4]')->asArray()->all(), '$rel[4]', '$labelCol'),
         'options' => ['placeholder' => " . $this->generateString('Choose') . "],{$theme}
         'pluginOptions' => [
@@ -1374,7 +1374,7 @@ class Generator extends \yii\gii\Generator
             return 'datetime';
         } elseif (stripos($column->name, 'email') !== false) {
             return 'email';
-        } elseif (stripos($column->name, 'url') !== false) {
+        } elseif (preg_match('/(\b|[_-])url(\b|[_-])/i', $column->name)) {
             return 'url';
         } else {
             return 'text';
@@ -1393,6 +1393,7 @@ class Generator extends \yii\gii\Generator
         $types = [];
         foreach ($table->columns as $column) {
             switch ($column->type) {
+                case Schema::TYPE_TINYINT:
                 case Schema::TYPE_SMALLINT:
                 case Schema::TYPE_INTEGER:
                 case Schema::TYPE_BIGINT:
@@ -1486,6 +1487,7 @@ class Generator extends \yii\gii\Generator
         $hashConditions = [];
         foreach ($columns as $column => $type) {
             switch ($type) {
+                case Schema::TYPE_TINYINT:
                 case Schema::TYPE_SMALLINT:
                 case Schema::TYPE_INTEGER:
                 case Schema::TYPE_BIGINT:
@@ -1501,7 +1503,8 @@ class Generator extends \yii\gii\Generator
                     $hashConditions[] = "'{$column}' => \$this->{$column},";
                     break;
                 default:
-                    $likeConditions[] = "->andFilterWhere(['like', '{$column}', \$this->{$column}])";
+                    $likeKeyword = $this->getClassDbDriverName() === 'pgsql' ? 'ilike' : 'like';
+                    $likeConditions[] = "->andFilterWhere(['{$likeKeyword}', '{$column}', \$this->{$column}])";
                     break;
             }
         }
@@ -1525,25 +1528,27 @@ class Generator extends \yii\gii\Generator
      */
     public function generateUrlParams()
     {
-        $pks = $this->tableSchema->primaryKey;
+        /* @var $class ActiveRecord */
+        $class = $this->modelClass;
+        $pks = $class::primaryKey();
         if (count($pks) === 1) {
-            if (is_subclass_of($this->modelClass, 'yii\mongodb\ActiveRecord')) {
+            if (is_subclass_of($class, 'yii\mongodb\ActiveRecord')) {
                 return "'id' => (string)\$model->{$pks[0]}";
-            } else {
-                return "'id' => \$model->{$pks[0]}";
-            }
-        } else {
-            $params = [];
-            foreach ($pks as $pk) {
-                if (is_subclass_of($this->modelClass, 'yii\mongodb\ActiveRecord')) {
-                    $params[] = "'$pk' => (string)\$model->$pk";
-                } else {
-                    $params[] = "'$pk' => \$model->$pk";
-                }
             }
 
-            return implode(', ', $params);
+            return "'id' => \$model->{$pks[0]}";
         }
+
+        $params = [];
+        foreach ($pks as $pk) {
+            if (is_subclass_of($class, 'yii\mongodb\ActiveRecord')) {
+                $params[] = "'$pk' => (string)\$model->$pk";
+            } else {
+                $params[] = "'$pk' => \$model->$pk";
+            }
+        }
+
+        return implode(', ', $params);
     }
 
     public function getTableSchema()
@@ -1557,12 +1562,14 @@ class Generator extends \yii\gii\Generator
      */
     public function generateActionParams()
     {
-        $pks = $this->tableSchema->primaryKey;
+        /* @var $class ActiveRecord */
+        $class = $this->modelClass;
+        $pks = $class::primaryKey();
         if (count($pks) === 1) {
             return '$id';
-        } else {
-            return '$' . implode(', $', $pks);
         }
+
+        return '$' . implode(', $', $pks);
     }
 
     /**
@@ -1572,25 +1579,26 @@ class Generator extends \yii\gii\Generator
     public function generateActionParamComments()
     {
         /* @var $class ActiveRecord */
-        $pks = $this->tableSchema->primaryKey;
+        $class = $this->modelClass;
+        $pks = $class::primaryKey();
         if (($table = $this->getTableSchema()) === false) {
             $params = [];
             foreach ($pks as $pk) {
-                $params[] = '@param ' . (substr(strtolower($pk), -2) == 'id' ? 'integer' : 'string') . ' $' . $pk;
+                $params[] = '@param ' . (strtolower(substr($pk, -2)) === 'id' ? 'integer' : 'string') . ' $' . $pk;
             }
 
             return $params;
         }
         if (count($pks) === 1) {
             return ['@param ' . $table->columns[$pks[0]]->phpType . ' $id'];
-        } else {
-            $params = [];
-            foreach ($pks as $pk) {
-                $params[] = '@param ' . $table->columns[$pk]->phpType . ' $' . $pk;
-            }
-
-            return $params;
         }
+
+        $params = [];
+        foreach ($pks as $pk) {
+            $params[] = '@param ' . $table->columns[$pk]->phpType . ' $' . $pk;
+        }
+
+        return $params;
     }
 
     /**
@@ -1764,4 +1772,16 @@ class Generator extends \yii\gii\Generator
         return $this->getTableSchema()->getColumnNames();
     }
 
+    /**
+     * @return string|null driver name of modelClass db connection.
+     * In case db is not instance of \yii\db\Connection null will be returned.
+     * @since 2.0.6
+     */
+    protected function getClassDbDriverName()
+    {
+        /* @var $class ActiveRecord */
+        $class = $this->modelClass;
+        $db = $class::getDb();
+        return $db instanceof \yii\db\Connection ? $db->driverName : null;
+    }
 }

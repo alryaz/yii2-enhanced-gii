@@ -22,6 +22,9 @@ use yii\widgets\ActiveForm;
     <?= "<?php " ?>$form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        //'options' => [
+        //    'data-pjax' => 1
+        //],
     ]); ?>
 
 <?php

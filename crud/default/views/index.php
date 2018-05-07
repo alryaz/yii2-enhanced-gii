@@ -24,7 +24,7 @@ $this->title = <?= ($generator->pluralize) ? $generator->generateString(Inflecto
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="<?= Inflector::camel2id($baseModelClass) ?>-index">
-<?php if ($generator->generateFlashMessages) : ?>
+<?php if ($generator->generateFlashMessages and !$generator->adminLTE) : ?>
     <?='<?php ' ?>\almirb\yii2common\components\FlashHelper::showFlashMessages(); <?='?>' ?>
 <?php endif; ?>
 
