@@ -423,6 +423,7 @@ class Generator extends \yii\gii\Generator {
     private function generateManyManyRelations($table, $fks, $relations)
     {
         $db = $this->getDbConnection();
+        $nsModel = $this->nsModel;
 
         foreach ($fks as $pair) {
             list($firstKey, $secondKey) = $pair;
@@ -443,7 +444,7 @@ class Generator extends \yii\gii\Generator {
             $viaLink = $this->generateRelationLink($firstKey);
             $relationName = $this->generateRelationName($relations, $table0Schema, key($secondKey), true);
             $relations[$table0Schema->fullName][$relationName] = [
-                "return \$this->hasMany($className1::class, $link)->viaTable('"
+                "return \$this->hasMany(\\{$nsModel}\\{$className1}::class, $link)->viaTable('"
                 . $this->generateTableName($table->name) . "', $viaLink);",
                 $className1,
                 true,
@@ -453,7 +454,7 @@ class Generator extends \yii\gii\Generator {
             $viaLink = $this->generateRelationLink($secondKey);
             $relationName = $this->generateRelationName($relations, $table1Schema, key($firstKey), true);
             $relations[$table1Schema->fullName][$relationName] = [
-                "return \$this->hasMany($className0::class, $link)->viaTable('"
+                "return \$this->hasMany(\\{$nsModel}\\{$className0}::class, $link)->viaTable('"
                 . $this->generateTableName($table->name) . "', $viaLink);",
                 $className0,
                 true,
@@ -475,6 +476,7 @@ class Generator extends \yii\gii\Generator {
         $db = $this->getDbConnection();
         $relations = [];
         $schemaNames = $this->getSchemaNames();
+        $nsModel = $this->nsModel;
         foreach ($schemaNames as $schemaName) {
             foreach ($db->getSchema()->getTableSchemas($schemaName) as $table) {
                 $className = $this->generateClassName($table->fullName);
@@ -493,7 +495,7 @@ class Generator extends \yii\gii\Generator {
                     $link = $this->generateRelationLink(array_flip($refs));
                     $relationName = $this->generateRelationName($relations, $table, $fks[0], false);
                     $relations[$table->fullName][$relationName] = [
-                        "return \$this->hasOne($refClassName::class, $link);",
+                        "return \$this->hasOne(\\{$nsModel}\\{$refClassName}::class, $link);",
                         $refClassName,
                         false,
                     ];
@@ -502,8 +504,9 @@ class Generator extends \yii\gii\Generator {
                     $hasMany = $this->isHasManyRelation($table, $fks);
                     $link = $this->generateRelationLink($refs);
                     $relationName = $this->generateRelationName($relations, $refTableSchema, $className, $hasMany);
+                    $nsModel = $this->nsModel;
                     $relations[$refTableSchema->fullName][$relationName] = [
-                        "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "($className::class, $link);",
+                        "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "(\\{$nsModel}\\{$className}::class, $link);",
                         $className,
                         $hasMany,
                     ];
@@ -905,6 +908,7 @@ class Generator extends \yii\gii\Generator {
         }
 
         // Exist rules for foreign keys
+        $nsModel = $this->nsModel;
         foreach ($table->foreignKeys as $refs) {
             $refTable = $refs[0];
             $refTableSchema = $db->getTableSchema($refTable);
@@ -920,7 +924,7 @@ class Generator extends \yii\gii\Generator {
                 $targetAttributes[] = "'$key' => '$value'";
             }
             $targetAttributes = implode(', ', $targetAttributes);
-            $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::class, 'targetAttribute' => [$targetAttributes]]";
+            $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => \\{$nsModel}\\{$refClassName}::class, 'targetAttribute' => [$targetAttributes]]";
         }
 
         return $rules;
