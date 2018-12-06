@@ -185,7 +185,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         }
 
         if (Yii::$app->request->isAjax) {
-            return Yii::$app->getResponse()->redirect(Yii::$app->request->referrer, 200, false);
+            return Yii::$app->getResponse()->redirect(Yii::$app->request->referrer, 302, false);
         } else {
 <?php if ($generator->generateFlashMessages) : ?>
             Yii::$app->session->setFlash('success', <?= $generator->generateString('Item successfully erased!') ?>);
