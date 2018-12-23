@@ -1250,9 +1250,9 @@ class Generator extends \yii\gii\Generator
             return $output;
         } else {
             if (preg_match('/^(password|pass|passwd|passcode|senha)$/i', $column->name)) {
-                $input = 'passwordInput';
+                $format = 'password';
             } else {
-                $input = 'textInput';
+                $format = $this->generateColumnFormat($column);
             }
             if (is_array($column->enumValues) && count($column->enumValues) > 0) {
                 $dropDownOptions = [];
@@ -1262,9 +1262,9 @@ class Generator extends \yii\gii\Generator
                 return "\$form->field(\$model, '$attribute')->dropDownList("
                     . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)) . ", ['prompt' => ''])";
             } elseif ($column->phpType !== 'string' || $column->size === null) {
-                return "\$form->field(\$model, '$attribute')->$input(['placeholder' => ''])";
+                return "\$form->field(\$model, '$attribute')->input('$format', ['placeholder' => ''])";
             } else {
-                return "\$form->field(\$model, '$attribute')->$input(['maxlength' => true, 'placeholder' => ''])";
+                return "\$form->field(\$model, '$attribute')->input('$format', ['maxlength' => true, 'placeholder' => ''])";
             }
         }
     }
