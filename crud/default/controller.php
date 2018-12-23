@@ -214,7 +214,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         $content = $this->renderAjax('_pdf', [
             'model' => $model,
 <?php foreach ($relations as $name => $rel): ?>
-<?php if ($rel[2] && isset($rel[3]) && !in_array($name, $generator->skippedRelations && $generator->generateRelationsOnView)): ?>
+<?php if ($rel[2] && isset($rel[3]) && !in_array($name, $generator->skippedRelations) && $generator->generateRelationsOnView): ?>
             'provider<?= $rel[1]?>' => $provider<?= $rel[1] ?>,
 <?php endif; ?>
 <?php endforeach; ?>

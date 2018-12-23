@@ -1195,6 +1195,7 @@ class Generator extends \yii\gii\Generator
         } elseif ($column->dbType === 'date') {
             return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::class, [        
         'widgetClass' => 'yii\widgets\MaskedInput',
+        'autoWidget' => false,
         'widgetOptions' => [
                     'options' => ['class'=>'form-control'],
                     'clientOptions' => [
@@ -1207,6 +1208,7 @@ class Generator extends \yii\gii\Generator
             return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::class, [      
         'type'=> \kartik\datecontrol\DateControl::FORMAT_TIME,
         'widgetClass' => 'yii\widgets\MaskedInput',
+        'autoWidget' => false,
         'widgetOptions' => [
                     'options' => ['class'=>'form-control'],
                     'clientOptions' => [
@@ -1219,6 +1221,7 @@ class Generator extends \yii\gii\Generator
             return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::class, [        
         'type'=> \kartik\datecontrol\DateControl::FORMAT_DATETIME,
         'widgetClass' => 'yii\widgets\MaskedInput',
+        'autoWidget' => false,
         'widgetOptions' => [
                     'options' => ['class'=>'form-control'],
                     'clientOptions' => [
@@ -1297,7 +1300,8 @@ class Generator extends \yii\gii\Generator
         } elseif ($column->dbType === 'date') {
             return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::class, [
         'widgetClass' => 'yii\widgets\MaskedInput',
-        'options' => [
+        'autoWidget' => false,
+        'widgetOptions' => [
             'mask' => 'd/m/y',
             'options' => ['class'=>'form-control'],
         ]
@@ -1305,7 +1309,8 @@ class Generator extends \yii\gii\Generator
         } elseif ($column->dbType === 'time') {
             return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::class, [
         'widgetClass' => 'yii\widgets\MaskedInput',
-        'options' => [
+        'autoWidget' => false,
+        'widgetOptions' => [
             'mask' => 'h:i:s',
             'options' => ['class'=>'form-control'],
         ]
@@ -1313,7 +1318,8 @@ class Generator extends \yii\gii\Generator
         } elseif ($column->dbType === 'datetime') {
             return "\$form->field(\$model, '$attribute')->widget(\kartik\datecontrol\DateControl::class, [
         'widgetClass' => 'yii\widgets\MaskedInput',
-        'options' => [
+        'autoWidget' => false,
+        'widgetOptions' => [
             'mask' => 'd/m/y h:i:s',
             'options' => ['class'=>'form-control'],
         ]
