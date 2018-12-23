@@ -2,6 +2,9 @@
 
 /* @var $this yii\web\View */
 /* @var $generator \mootensai\enhancedgii\crud\Generator */
+
+use yii\helpers\Inflector;
+
 $tableSchema = $generator->getDbConnection()->getTableSchema($relations[3]);
 ?>
 <?= "<?php" ?>
@@ -47,7 +50,7 @@ endforeach;
 endif; ?>
         [
             'class' => 'yii\grid\ActionColumn',
-            'controller' => '<?= \yii\helpers\Inflector::camel2id($relations[1])?>'
+            'controller' => '<?= Inflector::camel2id($relations[1])?>'
         ],
     ];
     

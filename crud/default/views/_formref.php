@@ -1,4 +1,7 @@
 <?php
+
+use yii\helpers\Inflector;
+
 /* @var $generator \mootensai\enhancedgii\crud\Generator */
 $tableSchema = $generator->getDbConnection()->getTableSchema($relations[3]);
 $fk = $generator->generateFK($tableSchema);
@@ -36,13 +39,13 @@ endforeach; ?>
             'type' => 'raw',
             'label' => '',
             'value' => function($model, $key) {
-                return Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' =>  <?= $generator->generateString('Delete') ?>, 'onClick' => 'delRow<?= $relations[1]; ?>(' . $key . '); return false;', 'id' => '<?= yii\helpers\Inflector::camel2id($relations[1]) ?>-del-btn']);
+                return Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' =>  <?= $generator->generateString('Delete') ?>, 'onClick' => 'delRow<?= $relations[1]; ?>(' . $key . '); return false;', 'id' => '<?= Inflector::camel2id($relations[1]) ?>-del-btn']);
             },
         ],
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . <?= $generator->generateString(yii\helpers\Inflector::camel2words($relations[1])) ?>,
+            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . <?= $generator->generateString(Inflector::camel2words($relations[1])) ?>,
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
