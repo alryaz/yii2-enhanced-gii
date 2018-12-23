@@ -144,9 +144,10 @@ abstract class Base<?= $className ?> extends <?= '\\' . ltrim($generator->baseMo
 <?php if ($generator->createdAt || $generator->updatedAt
         || $generator->createdBy || $generator->updatedBy
         || $generator->UUIDColumn): 
-    echo "\n"; ?>/**
+    echo "\n"; ?>
+    /**
      * {@inheritdoc}
-     * @return type mixed
+     * @return array
      */ 
     public function behaviors()
     {

@@ -1,7 +1,8 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $generator yii\gii\generators\crud\Generator */
+/* @var $generator \mootensai\enhancedgii\crud\Generator*/
+
 echo $form->errorSummary($generator);
 echo $form->field($generator, 'db');
 echo $form->field($generator, 'tableName');
@@ -34,35 +35,46 @@ echo $form->field($generator, 'skippedRelations');
         <?= $form->field($generator, 'pdf')->checkbox(); ?>
     </div>
 </div>
-    <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($generator, 'cancelable')->checkbox(); ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($generator, 'useTablePrefix')->checkbox(); ?>
-        </div>
+<div class="row">
+    <div class="col-md-6">
+        <?= $form->field($generator, 'cancelable')->checkbox(); ?>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($generator, 'generateSearchModel')->checkbox(); ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($generator, 'generateRelationsOnCreate')->checkbox(); ?>
-        </div>
+    <div class="col-md-6">
+        <?= $form->field($generator, 'useTablePrefix')->checkbox(); ?>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($generator, 'generateRelationsOnView')->checkbox(); ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($generator, 'generateFlashMessages')->checkbox(); ?>
-        </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <?= $form->field($generator, 'generateSearchModel')->checkbox(); ?>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($generator, 'adminLTE')->checkbox(); ?>
-        </div>
+    <div class="col-md-6">
+        <?= $form->field($generator, 'generateRelationsOnCreate')->checkbox(); ?>
     </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <?= $form->field($generator, 'generateRelationsOnView')->checkbox(); ?>
+    </div>
+    <div class="col-md-6">
+        <?= $form->field($generator, 'generateFlashMessages')->checkbox(); ?>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <?= $form->field($generator, 'defaultIcon'); ?>
+    </div>
+    <div class="col-md-6">
+        <?= $form->field($generator, 'iconPack')->dropDownList(array_combine(
+            $generator->getIconPacks(),
+            $generator->getIconPacks()
+        )); ?>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <?= $form->field($generator, 'adminLTE')->checkbox(); ?>
+    </div>
+</div>
 <?php
 echo $form->field($generator, 'nsSearchModel');
 echo $form->field($generator, 'searchModelClass');

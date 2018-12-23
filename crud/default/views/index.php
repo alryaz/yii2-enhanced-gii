@@ -79,6 +79,8 @@ if ($generator->indexWidgetType === 'grid'):
 ?>
     ?>
     <?= "<?= " ?>GridView::widget([
+        'striped' => true,
+        'hover' => false,
         'dataProvider' => $dataProvider,
         <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => \$gridColumn,\n" : "'columns' => \$gridColumn,\n"; ?>
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-<?= Inflector::camel2id(StringHelper::basename($generator->modelClass))?>']],

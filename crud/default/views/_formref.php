@@ -39,17 +39,17 @@ endforeach; ?>
             'type' => 'raw',
             'label' => '',
             'value' => function($model, $key) {
-                return Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' =>  <?= $generator->generateString('Delete') ?>, 'onClick' => 'delRow<?= $relations[1]; ?>(' . $key . '); return false;', 'id' => '<?= Inflector::camel2id($relations[1]) ?>-del-btn']);
+                return Html::a('<?= $generator->generateIcon('trash'); ?>', '#', ['title' =>  <?= $generator->generateString('Delete') ?>, 'onClick' => 'delRow<?= $relations[1]; ?>(' . $key . '); return false;', 'id' => '<?= Inflector::camel2id($relations[1]) ?>-del-btn']);
             },
         ],
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . <?= $generator->generateString(Inflector::camel2words($relations[1])) ?>,
+            'heading' => '<?= $generator->generateIconForTable($relations[$generator::REL_TABLE]) ?>' . <?= $generator->generateString(Inflector::camel2words($relations[1])) ?>,
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
-            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . <?= $generator->generateString('Add Row') ?>, ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRow<?= $relations[1]; ?>()']),
+            'after' => Html::button('<?= $generator->generateIcon('plus') ?>' . <?= $generator->generateString('Add Row') ?>, ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRow<?= $relations[1]; ?>()']),
         ]
     ]
 ]);

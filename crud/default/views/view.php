@@ -35,9 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- menu buttons -->
         <div class='pull-left'>
             <?= "
-            <?= Html::a('<span class=\"glyphicon glyphicon-plus\"></span> '." . $generator->generateString('Create') . ", ['create'], ['class' => 'btn btn-success']) ?>
-            <?= Html::a('<span class=\"glyphicon glyphicon-pencil\"></span> '." . $generator->generateString('Edit') . ", ['update', " . $generator->generateUrlParams() . "], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('<span class=\"glyphicon glyphicon-trash\"></span> '." . $generator->generateString('Delete') . ", ['delete', " . $generator->generateUrlParams() . "], [
+            <?= Html::a('" . $generator->generateIcon('plus') . "' . " . $generator->generateString('Create') . ", ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('" . $generator->generateIcon('edit') . "' . " . $generator->generateString('Edit') . ", ['update', " . $generator->generateUrlParams() . "], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('" . $generator->generateIcon('trash') . "' . " . $generator->generateString('Delete') . ", ['delete', " . $generator->generateUrlParams() . "], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => " . $generator->generateString('Are you sure you want to delete this item?') . ",
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php if ($generator->pdf): ?>
 <?= "<?= " ?>
             <?= "
-             Html::a('<i class=\"fa glyphicon glyphicon-hand-up\"></i> ' . " . $generator->generateString('PDF') . ", 
+             Html::a('" . $generator->generateIcon('pdf') . "' . " . $generator->generateString('PDF') . ", 
                 ['pdf', 'id' => \$model['$pk']],
                 [
                     'class' => 'btn btn-danger',
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
         <div class="pull-right">
             <?= "            
-            <?= Html::a('<span class=\"glyphicon glyphicon-list\"></span> '.". $generator->generateString('List') . ", ['index'], ['class' => 'btn btn-default']) ?>
+            <?= Html::a('" . $generator->generateIcon('list') .  "' . " . $generator->generateString('List') . ", ['index'], ['class' => 'btn btn-default']) ?>
             \n" ?>
         </div>
     </div>
@@ -134,7 +134,7 @@ if($provider<?= $rel[1] ?>->totalCount){
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-<?= Inflector::camel2id($rel[3])?>']],
         'panel' => [
         'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode(<?= $generator->generateString(Inflector::camel2words($rel[1])) ?>.' '. $this->title),
+        'heading' => '<?= $generator->generateIconForTable($rel[$generator::REL_TABLE]) ?>' . Html::encode(<?= $generator->generateString(Inflector::camel2words($rel[1])) ?>.' '. $this->title),
         ],
         'columns' => $gridColumn<?= $rel[1] . "\n" ?>
     ]);

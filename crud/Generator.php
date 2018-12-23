@@ -10,6 +10,7 @@ use \yii\db\Connection;
 use \yii\db\Schema;
 use \yii\db\TableSchema;
 use \yii\gii\CodeFile;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 use \yii\helpers\VarDumper;
@@ -33,6 +34,8 @@ class Generator extends \yii\gii\Generator
 
     const FK_TABLE_NAME = 0;
     const FK_FIELD_NAME = 1;
+
+    const ICON_PACK_DISABLE = 'disable';
 
     /* @var $tableSchema TableSchema */
 
@@ -83,6 +86,8 @@ class Generator extends \yii\gii\Generator
     public $skippedRelations;
     public $relations;
     public $adminLTE;
+    public $defaultIcon = 'book';
+    public $iconPack = 'glyphicons';
 
     /**
      * {@inheritdoc}
@@ -120,13 +125,14 @@ class Generator extends \yii\gii\Generator
             [['controllerClass'], 'match', 'pattern' => '/(^|\\\\)[A-Z][^\\\\]+Controller$/', 'message' => 'Controller class name must start with an uppercase letter.'],
 //            [['searchModelClass'], 'validateNewClass'],
             [['indexWidgetType'], 'in', 'range' => ['grid', 'list']],
+            [['iconPack'], 'in', 'range' => $this->getIconPacks() ],
 //            [['modelClass'], 'validateModelClass'],
             [['enableI18N', 'generateRelations', 'generateRelationsOnCreate', 'generateRelationsOnView', 'generateFlashMessages','generateSearchModel', 'pluralize', 'expandable', 'cancelable', 'pdf', 'loggedUserOnly', 'adminLTE'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
             [['viewPath', 'skippedRelations', 'skippedColumns',
                 'controllerClass', 'blameableValue', 'nameAttribute',
                 'hiddenColumns', 'createdAt', 'updatedAt', 'createdBy', 'updatedBy',
-                'UUIDColumn'], 'safe'],
+                'UUIDColumn', 'defaultIcon'], 'safe'],
         ]);
     }
 
@@ -156,7 +162,8 @@ class Generator extends \yii\gii\Generator
             'expandable' => 'Expandable Index Grid View',
             'cancelable' => 'Add Cancel Button On Form',
             'pdf' => 'PDF Printable View',
-            'adminLTE' => 'AdminLTE Style'
+            'adminLTE' => 'AdminLTE Style',
+            'iconPack' => 'Use icon pack',
         ]);
     }
 
@@ -298,7 +305,9 @@ class Generator extends \yii\gii\Generator
             'UUIDColumn',
             'baseControllerClass',
             'indexWidgetType',
-            'viewPath']);
+            'viewPath',
+            'iconPack',
+            'defaultIcon']);
     }
 
     /**
@@ -1116,7 +1125,7 @@ class Generator extends \yii\gii\Generator
             'widgetOptions' => [
                     'options' => ['class'=>'form-control'],
                     'clientOptions' => [
-                        'alias'    => 'datetime',                    
+                        'alias'    => 'datetime',
                         //'placeholder' => '_',
                     ],
                 ]
@@ -1133,11 +1142,22 @@ class Generator extends \yii\gii\Generator
             'widgetClass' => \kartik\widgets\Select2::class,
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map($fkClassFQ::find()->orderBy('$labelCol')->asArray()->all(), '$rel[4]', '$labelCol'),
-                'options' => ['placeholder' => " . $this->generateString('Choose')."],
+                'options' => ['placeholder' => " . $this->generateString('Choose') . "],
             ],
             'columnOptions' => ['width' => '200px']
         ]";
             return $output;
+        } elseif (preg_match('/^(email)$/i', $column->name)) {
+            return "'$attribute' => ['type' => TabularForm::INPUT_WIDGET,           
+            'widgetClass' => 'yii\widgets\MaskedInput',
+            'widgetOptions' => [
+                    'options' => ['class'=>'form-control'],
+                    'clientOptions' => [
+                        'alias'    => 'email',
+                        //'placeholder' => '_',
+                    ],
+                ]
+        ]";
         } else {
             if (preg_match('/^(password|pass|passwd|passcode|senha)$/i', $column->name)) {
                 $input = 'INPUT_PASSWORD';
@@ -1385,6 +1405,71 @@ class Generator extends \yii\gii\Generator
         } else {
             return 'text';
         }
+    }
+
+    /**
+     * @var array Icon packs registry
+     */
+    protected static $iconPacks = [
+        'fontawesome-4' => [
+            'format' => '<i class="fa fa-{icon}"></i>&nbsp;',
+            'mappings' => [],
+        ],
+        'glyphicons' => [
+            'format' => '<i class="glyphicon glyphicon-{icon}"></i>&nbsp;&nbsp;',
+            'mappings' => [
+                'pdf' => 'duplicate',
+                'box' => 'folder-close',
+            ],
+        ],
+        self::ICON_PACK_DISABLE => '',
+    ];
+
+    public function getIconPacks()
+    {
+        return array_keys(self::$iconPacks);
+    }
+
+    /**
+     * Generates icons for certain icon packs
+     *
+     * @param $icon
+     * @param null $pack
+     * @param null $template
+     * @return mixed
+     */
+    public function generateIcon($icon, $pack = null, $template = null)
+    {
+        $pack = $pack ? : $this->iconPack;
+
+        if ($pack === self::ICON_PACK_DISABLE) {
+            return '';
+        }
+
+        return str_replace(
+            '{icon}',
+            ArrayHelper::getValue(self::$iconPacks[$pack]['mappings'], $icon, $icon),
+            self::$iconPacks[$pack]['format']
+        );
+    }
+
+    protected static $tableIconMatchers = [
+        '/^(user|person)s?$/i' => 'user',
+        '/^(group|people|collective)s?$/i' => 'group',
+        '/^(picture|photo|snapshot|icon|image)s?$/i' => 'picture',
+    ];
+    public function generateIconForTable($tableName, $pack = null, $template = null)
+    {
+        $icon = $this->defaultIcon;
+
+        foreach (self::$tableIconMatchers as $matcher => $substituteIcon) {
+            if (preg_match($matcher, $tableName)) {
+                $icon = $substituteIcon;
+                break;
+            }
+        }
+
+        return $this->generateIcon($icon, $pack, $template);
     }
 
     /**

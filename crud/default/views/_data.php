@@ -13,7 +13,7 @@ use kartik\tabs\TabsX;
 use yii\helpers\Url;
 $items = [
     [
-        'label' => '<i class="glyphicon glyphicon-user"></i> '. Html::encode(<?= $generator->generateString(Inflector::camel2words($rel[1])) ?>),
+        'label' => '<?= $generator->generateIcon('user') ?>'. Html::encode(<?= $generator->generateString(Inflector::camel2words($rel[1])) ?>),
         'content' => $this->render('_view', [
             'all' => false,
         ]),
@@ -21,7 +21,7 @@ $items = [
 <?php foreach ($relations as $name => $rel): ?>
     <?php if ($rel[2] && isset($rel[3]) && !in_array($name, $generator->skippedRelations)): ?>
     [
-        'label' => '<i class="glyphicon glyphicon-user"></i> '. Html::encode(<?= $generator->generateString(Inflector::camel2words($rel[1])) ?>),
+        'label' => '<?= $generator->generateIcon('user') ?>' . Html::encode(<?= $generator->generateString(Inflector::camel2words($rel[1])) ?>),
         'content' => $this->render('_data<?= $rel[1] ?>', [
             'model' => $model,
             'row' => $model-><?= $name ?>,
